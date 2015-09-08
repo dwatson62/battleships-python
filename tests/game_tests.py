@@ -16,7 +16,7 @@ class TestGame(unittest.TestCase):
   def test_displays_players_own_board(self):
     self.player1.place_ship(Ship('Destroyer'), 'B3')
     self.player2.shoot(self.player1, 'B3')
-    board = self.game.display_own_board(self.player1)
+    board = self.game.display_opponent_board(self.player1)
     for row in board:
       print row
     self.assertEqual(len(board), 10)
