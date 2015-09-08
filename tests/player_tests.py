@@ -36,6 +36,14 @@ class TestPlayer(unittest.TestCase):
     self.player1.place_ship(self.destroyer, 'A1')
     self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'A2'] }] )
 
+  def test_player_can_place_a_cruiser_horizontally(self):
+    """
+    Player can place a cruiser horizontally, and have record of its position
+    """
+    self.destroyer = Ship('Cruiser')
+    self.player1.place_ship(self.destroyer, 'A1')
+    self.assertEqual(self.player1.ships, [{'ship': 'Cruiser', 'positions': ['A1', 'A2', 'A3'] }] )
+
   def test_player_can_place_a_destroyer_vertically(self):
     """
     Player can place a destroyer vertically, and have record of its position

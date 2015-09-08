@@ -29,6 +29,33 @@ class TestShip(unittest.TestCase):
     self.squares = self.ship.get_horizontal_squares('B9')
     self.assertEqual(self.squares, ['B9', 'B10'])
 
+  def test_destroyer_can_be_placed_vertically(self):
+    self.ship = Ship('Destroyer')
+    self.squares = self.ship.get_vertical_squares('B9')
+    self.assertEqual(self.squares, ['B9', 'C9'])
+
+  def test_cruiser_can_be_placed_horizontally(self):
+    self.ship = Ship('Cruiser')
+    self.squares = self.ship.get_horizontal_squares('A3')
+    self.assertEqual(self.squares, ['A3', 'A4', 'A5'])
+
+  def test_cruiser_can_be_placed_vertically(self):
+    self.ship = Ship('Cruiser')
+    self.squares = self.ship.get_vertical_squares('A3')
+    self.assertEqual(self.squares, ['A3', 'B3', 'C3'])
+
+  def test_ship_cannot_be_placed_out_of_bounds(self):
+    self.ship = Ship('Sub')
+    with self.assertRaises(Exception) as context:
+      self.ship.check_out_of_bounds(['K10'])
+    self.assertTrue('Out of bounds' in context.exception)
+
+  def test_ship_cannot_be_placed_out_of_bounds2(self):
+    self.ship = Ship('Cruiser')
+    with self.assertRaises(Exception) as context:
+      self.ship.check_out_of_bounds(['A9', 'A10', 'A11'])
+    self.assertTrue('Out of bounds' in context.exception)
+
 
 if __name__ == '__main__':
   unittest.main()
