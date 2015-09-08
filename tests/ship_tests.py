@@ -56,6 +56,14 @@ class TestShip(unittest.TestCase):
       self.ship.check_out_of_bounds(['A9', 'A10', 'A11'])
     self.assertTrue('Out of bounds' in context.exception)
 
+  def test_ships_cannot_overlap(self):
+    self.player = Player()
+    self.player.place_ship(Ship('Destroyer'), 'A5')
+    self.ship = Ship('Cruiser')
+    with self.assertRaises(Exception) as context:
+      self.ship.check_overlapping(self.player, ['A6'])
+    self.assertTrue('Cannot overlap ships' in context.exception)
+
 
 if __name__ == '__main__':
   unittest.main()

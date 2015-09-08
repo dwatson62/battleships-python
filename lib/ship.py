@@ -11,10 +11,11 @@ class Ship(object):
     if self.name == 'Battleship': self.length = 4
     if self.name == 'Carrier': self.length = 5
 
-  def get_squares(self, position, orientation='H'):
+  def get_squares(self, player, position, orientation='H'):
     if orientation == 'H': return self.get_horizontal_squares(position)
     squares = self.get_vertical_squares(position)
     self.check_out_of_bounds(squares)
+    self.check_overlapping(player, squares)
     return squares
 
   def get_horizontal_squares(self, position):
@@ -47,3 +48,9 @@ class Ship(object):
     """Generates the characters from `c1` to `c2`, inclusive."""
     for c in xrange(ord(c1), ord(c2)+1):
       yield chr(c)
+
+  def check_overlapping(self, player, squares):
+    for square in squares:
+      for ship in player.ships:
+        if square in ship['positions']:
+          raise Exception('Cannot overlap ships')
