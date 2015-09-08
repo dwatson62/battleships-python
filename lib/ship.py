@@ -12,8 +12,8 @@ class Ship(object):
     if self.name == 'Carrier': self.length = 5
 
   def get_squares(self, player, position, orientation='H'):
-    if orientation == 'H': return self.get_horizontal_squares(position)
-    squares = self.get_vertical_squares(position)
+    if orientation == 'H': squares = self.get_horizontal_squares(position)
+    else: squares = self.get_vertical_squares(position)
     self.check_out_of_bounds(squares)
     self.check_overlapping(player, squares)
     return squares

@@ -7,7 +7,6 @@ class Player(object):
   def place_ship(self, ship, position, orientation='H'):
     self.ships.append( {'ship': ship.name, 'positions': ship.get_squares(self, position, orientation) } )
 
-
   def shoot(self, player, position):
     self.fired_positions.append(position)
     for ship in player.ships:

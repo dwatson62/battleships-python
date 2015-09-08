@@ -64,6 +64,5 @@ class TestShip(unittest.TestCase):
       self.ship.check_overlapping(self.player, ['A6'])
     self.assertTrue('Cannot overlap ships' in context.exception)
 
-
 if __name__ == '__main__':
   unittest.main()

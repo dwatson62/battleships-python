@@ -8,10 +8,15 @@ from game import *
 
 class TestGame(unittest.TestCase):
 
-  def test_game_has_two_players_on_creation(self):
+  def setUp(self):
     self.game = Game()
-    self.assertEqual(len(self.game.players), 2)
+    self.player1 = Player()
+    self.player2 = Player()
 
+  def test_says_game_over(self):
+    self.player2.place_ship(Ship('Sub'), 'J9')
+    self.player1.shoot(self.player2, 'J9')
+    self.assertEqual(self.game.declare_winner(self.player1, self.player2), 'Player 1 wins!' )
 
 if __name__ == '__main__':
   unittest.main()
