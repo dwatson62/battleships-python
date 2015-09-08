@@ -57,12 +57,16 @@ class TestShip(unittest.TestCase):
     self.assertTrue('Out of bounds' in context.exception)
 
   def test_ships_cannot_overlap(self):
-    self.player = Player()
+    self.player = Player('Player1')
     self.player.place_ship(Ship('Destroyer'), 'A5')
     self.ship = Ship('Cruiser')
     with self.assertRaises(Exception) as context:
       self.ship.check_overlapping(self.player, ['A6'])
     self.assertTrue('Cannot overlap ships' in context.exception)
+
+  def test_ship_has_hit_points(self):
+    self.ship = Ship('Cruiser')
+    self.assertEqual(self.ship.length, self.ship.hits)
 
 if __name__ == '__main__':
   unittest.main()

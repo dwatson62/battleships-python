@@ -10,10 +10,19 @@ class TestGame(unittest.TestCase):
 
   def setUp(self):
     self.game = Game()
-    self.player1 = Player()
-    self.player2 = Player()
+    self.player1 = Player('Player1')
+    self.player2 = Player('Player2')
+
+  def test_displays_players_own_board(self):
+    self.player1.place_ship(Ship('Destroyer'), 'B3')
+    self.player2.shoot(self.player1, 'B3')
+    board = self.game.display_own_board(self.player1)
+    for row in board:
+      print row
+    self.assertEqual(len(board), 10)
 
   def test_says_game_over(self):
+    self.player1.place_ship(Ship('Sub'), 'J1')
     self.player2.place_ship(Ship('Sub'), 'J9')
     self.player1.shoot(self.player2, 'J9')
     self.assertEqual(self.game.declare_winner(self.player1, self.player2), 'Player 1 wins!' )

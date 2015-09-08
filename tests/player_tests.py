@@ -8,8 +8,8 @@ from ship import *
 class TestPlayer(unittest.TestCase):
 
   def setUp(self):
-    self.player1 = Player()
-    self.player2 = Player()
+    self.player1 = Player('Player1')
+    self.player2 = Player('Player2')
 
   def test_player_exists(self):
     self.assertEqual(self.player1, self.player1)
@@ -26,7 +26,7 @@ class TestPlayer(unittest.TestCase):
     """
     self.sub = Ship('Sub')
     self.player1.place_ship(self.sub, 'A1')
-    self.assertEqual(self.player1.ships, [{'ship': 'Sub', 'positions': ['A1'] }] )
+    self.assertEqual(self.player1.ships, [{'ship': 'Sub', 'positions': ['A1'], 'hits': 1 }] )
 
   def test_player_can_place_a_destroyer_horizontally(self):
     """
@@ -34,7 +34,7 @@ class TestPlayer(unittest.TestCase):
     """
     self.destroyer = Ship('Destroyer')
     self.player1.place_ship(self.destroyer, 'A1')
-    self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'A2'] }] )
+    self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'A2'], 'hits': 2 }] )
 
   def test_player_can_place_a_cruiser_horizontally(self):
     """
@@ -42,7 +42,7 @@ class TestPlayer(unittest.TestCase):
     """
     self.destroyer = Ship('Cruiser')
     self.player1.place_ship(self.destroyer, 'A1')
-    self.assertEqual(self.player1.ships, [{'ship': 'Cruiser', 'positions': ['A1', 'A2', 'A3'] }] )
+    self.assertEqual(self.player1.ships, [{'ship': 'Cruiser', 'positions': ['A1', 'A2', 'A3'], 'hits': 3 }] )
 
   def test_player_can_place_a_destroyer_vertically(self):
     """
@@ -50,7 +50,7 @@ class TestPlayer(unittest.TestCase):
     """
     self.destroyer = Ship('Destroyer')
     self.player1.place_ship(self.destroyer, 'A1', 'V')
-    self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'B1'] }] )
+    self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'B1'], 'hits': 2 } ])
 
   def test_player_can_shoot_at_opponent(self):
     """

@@ -3,6 +3,7 @@ class Ship(object):
   def __init__(self, name):
     self.name = name
     self.get_length()
+    self.hits = self.length
 
   def get_length(self):
     if self.name == 'Sub': self.length = 1
