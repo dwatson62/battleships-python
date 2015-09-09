@@ -18,12 +18,7 @@ class TestGame(unittest.TestCase):
     self.assertEqual(len(board), 10)
 
   def test_displays_players_opponent_board(self):
-    self.player1.place_ship(Ship('Destroyer'), 'J1')
-    # self.player2.shoot(self.player1, 'J1')
-    self.player2.shoot(self.player1, 'J9')
     board = self.game.display_board(self.player1, 'ME')
-    for row in board:
-      print row
     self.assertEqual(len(board), 10)
 
   def test_says_game_over(self):
