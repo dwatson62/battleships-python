@@ -1,4 +1,5 @@
 from game import Game
+from helpers import char_range
 
 class Player(object):
 
@@ -22,18 +23,13 @@ class Player(object):
 
   def check_in_bounds(self, position):
     square = list(position)
-    if square[0] not in self.char_range('A', 'J'): self.out_of_bounds()
+    if square[0] not in char_range('A', 'J'): self.out_of_bounds()
     del square[0]
     if int("".join(square)) > 10: self.out_of_bounds()
     if int("".join(square)) < 1: self.out_of_bounds()
 
   def out_of_bounds(self):
     raise Exception('Out of bounds')
-
-  def char_range(self, c1, c2):
-    """Generates the characters from `c1` to `c2`, inclusive."""
-    for c in xrange(ord(c1), ord(c2)+1):
-      yield chr(c)
 
   def check_has_already_fired(self, position):
     if position in self.fired_shots:

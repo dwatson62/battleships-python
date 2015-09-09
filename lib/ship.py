@@ -1,3 +1,5 @@
+from helpers import char_range
+
 class Ship(object):
 
   def __init__(self, name):
@@ -41,15 +43,10 @@ class Ship(object):
   def check_out_of_bounds(self, squares):
     for square in squares:
       square = list(square)
-      if square[0] not in self.char_range('A', 'J'):
+      if square[0] not in char_range('A', 'J'):
         raise Exception('Out of bounds')
       del square[0]
       if int("".join(square)) > 10: raise Exception('Out of bounds')
-
-  def char_range(self, c1, c2):
-    """Generates the characters from `c1` to `c2`, inclusive."""
-    for c in xrange(ord(c1), ord(c2)+1):
-      yield chr(c)
 
   def check_overlapping(self, player, squares):
     for square in squares:

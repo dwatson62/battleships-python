@@ -10,6 +10,7 @@ class TestPlayer(unittest.TestCase):
   def setUp(self):
     self.player1 = Player('Player1')
     self.player2 = Player('Player2')
+    self.destroyer = Ship('Destroyer')
 
   def test_player_exists(self):
     self.assertEqual(self.player1, self.player1)
@@ -32,7 +33,6 @@ class TestPlayer(unittest.TestCase):
     """
     Player can place a destroyer horizontally, and have record of its position
     """
-    self.destroyer = Ship('Destroyer')
     self.player1.place_ship(self.destroyer, 'A1')
     self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'A2'], 'hits': 2 }] )
 
@@ -40,15 +40,14 @@ class TestPlayer(unittest.TestCase):
     """
     Player can place a cruiser horizontally, and have record of its position
     """
-    self.destroyer = Ship('Cruiser')
-    self.player1.place_ship(self.destroyer, 'A1')
+    self.cruiser = Ship('Cruiser')
+    self.player1.place_ship(self.cruiser, 'A1')
     self.assertEqual(self.player1.ships, [{'ship': 'Cruiser', 'positions': ['A1', 'A2', 'A3'], 'hits': 3 }] )
 
   def test_player_can_place_a_destroyer_vertically(self):
     """
     Player can place a destroyer vertically, and have record of its position
     """
-    self.destroyer = Ship('Destroyer')
     self.player1.place_ship(self.destroyer, 'A1', 'V')
     self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'B1'], 'hits': 2 } ])
 
@@ -81,15 +80,14 @@ class TestPlayer(unittest.TestCase):
     self.assertTrue('Out of bounds' in context.exception)
 
   def test_player_can_hit_opponent_ship(self):
-    self.ship = Ship('Destroyer')
-    self.player2.place_ship(self.ship, 'A1')
+    self.player2.place_ship(self.destroyer, 'A1')
     shoot = self.player1.shoot(self.player2, 'A1')
     self.assertEqual(shoot, 'HIT')
 
   def test_player_can_sink_ship(self):
-    self.sub = Ship('Sub')
-    self.player2.place_ship(self.sub, 'A1')
-    shoot = self.player1.shoot(self.player2, 'A1')
+    self.player2.place_ship(self.destroyer, 'A1')
+    self.player1.shoot(self.player2, 'A1')
+    shoot = self.player1.shoot(self.player2, 'A2')
     self.assertEqual(shoot, 'SUNK')
 
 if __name__ == '__main__':
