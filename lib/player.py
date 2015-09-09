@@ -4,7 +4,7 @@ class Player(object):
 
   def __init__(self, name):
     self.ships = []
-    self.fired_shots = {}
+    self.fired_shots = []
     self.received_shots = {}
     self.name = name
 
@@ -12,19 +12,45 @@ class Player(object):
     self.ships.append( {'ship': ship.name, 'positions': ship.get_squares(self, position, orientation), 'hits': ship.hits } )
 
   def shoot(self, player, position):
+    self.check_in_bounds(position)
+    self.check_has_already_fired(position)
     for ship in player.ships:
       if position in ship['positions']:
-        ship['hits'] -= 1
-        self.fired_shots[position] = 'HIT'
-        player.received_shots[position] = 'HIT'
+        self.has_hit(ship, player, position)
         return self.check_has_sunk(ship, player)
-    player.fired_shots[position] = 'X'
-    self.received_shots[position] = 'X'
+    return self.has_missed(player, position)
+
+  def check_in_bounds(self, position):
+    square = list(position)
+    if square[0] not in self.char_range('A', 'J'): self.out_of_bounds()
+    del square[0]
+    if int("".join(square)) > 10: self.out_of_bounds()
+    if int("".join(square)) < 1: self.out_of_bounds()
+
+  def out_of_bounds(self):
+    raise Exception('Out of bounds')
+
+  def char_range(self, c1, c2):
+    """Generates the characters from `c1` to `c2`, inclusive."""
+    for c in xrange(ord(c1), ord(c2)+1):
+      yield chr(c)
+
+  def check_has_already_fired(self, position):
+    if position in self.fired_shots:
+      raise Exception('Already fired once')
+
+  def has_hit(self, ship, player, position):
+    ship['hits'] -= 1
+    self.fired_shots.append(position)
+    player.received_shots[position] = 'HIT'
+
+  def has_missed(self, player, position):
+    self.fired_shots.append(position)
+    player.received_shots[position] = 'X'
     return 'X'
 
   def check_has_sunk(self, ship, player):
     if ship['hits'] > 0: return 'HIT'
     for square in ship['positions']:
-      self.fired_shots[square] = 'SUNK'
       player.received_shots[square] = 'SUNK'
     return 'SUNK'

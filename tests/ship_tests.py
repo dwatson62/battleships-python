@@ -11,6 +11,11 @@ class TestShip(unittest.TestCase):
     self.ship = Ship('Sub')
     self.assertEqual(self.ship.name, 'Sub')
 
+  def test_throws_error_when_given_incorrect_ship(self):
+    with self.assertRaises(Exception) as context:
+      self.ship = Ship('Yacht')
+    self.assertTrue('Ship not available' in context.exception)
+
   def test_sub_gets_correct_length(self):
     self.ship = Ship('Sub')
     self.assertEqual(self.ship.length, 1)

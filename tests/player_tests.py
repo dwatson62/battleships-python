@@ -59,6 +59,27 @@ class TestPlayer(unittest.TestCase):
     shoot = self.player1.shoot(self.player2, 'A1')
     self.assertEqual(shoot, 'X')
 
+  def test_player_can_fire_at_square_only_once(self):
+    shoot = self.player1.shoot(self.player2, 'A1')
+    with self.assertRaises(Exception) as context:
+      self.player1.shoot(self.player2, 'A1')
+    self.assertTrue('Already fired once' in context.exception)
+
+  def test_player_cannot_shoot_outside_of_board(self):
+    with self.assertRaises(Exception) as context:
+      self.player1.shoot(self.player2, 'A11')
+    self.assertTrue('Out of bounds' in context.exception)
+
+  def test_player_cannot_shoot_outside_of_board2(self):
+    with self.assertRaises(Exception) as context:
+      self.player1.shoot(self.player2, 'A0')
+    self.assertTrue('Out of bounds' in context.exception)
+
+  def test_player_cannot_shoot_outside_of_board3(self):
+    with self.assertRaises(Exception) as context:
+      self.player1.shoot(self.player2, '1B')
+    self.assertTrue('Out of bounds' in context.exception)
+
   def test_player_can_hit_opponent_ship(self):
     self.ship = Ship('Destroyer')
     self.player2.place_ship(self.ship, 'A1')

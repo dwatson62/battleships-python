@@ -2,15 +2,16 @@ class Ship(object):
 
   def __init__(self, name):
     self.name = name
-    self.get_length()
+    self.length = self.get_length()
     self.hits = self.length
 
   def get_length(self):
-    if self.name == 'Sub': self.length = 1
-    if self.name == 'Destroyer': self.length = 2
-    if self.name == 'Cruiser': self.length = 3
-    if self.name == 'Battleship': self.length = 4
-    if self.name == 'Carrier': self.length = 5
+    if self.name == 'Sub': return 1
+    if self.name == 'Destroyer': return 2
+    if self.name == 'Cruiser': return 3
+    if self.name == 'Battleship': return 4
+    if self.name == 'Carrier': return 5
+    raise Exception('Ship not available')
 
   def get_squares(self, player, position, orientation='H'):
     if orientation == 'H': squares = self.get_horizontal_squares(position)
