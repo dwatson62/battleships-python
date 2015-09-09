@@ -15,20 +15,20 @@ class TestGame(unittest.TestCase):
 
   def test_displays_players_own_board(self):
     self.player1.place_ship(Ship('Destroyer'), 'B3')
-    self.player2.shoot(self.player1, 'B3')
-    self.player2.shoot(self.player1, 'B4')
-    self.player2.shoot(self.player1, 'J8')
-    self.player2.shoot(self.player1, 'C3')
-    self.player2.shoot(self.player1, 'G2')
+    # self.player2.shoot(self.player1, 'B3')
+    # self.player2.shoot(self.player1, 'B4')
+    # self.player2.shoot(self.player1, 'J8')
+    # self.player2.shoot(self.player1, 'C3')
+    # self.player2.shoot(self.player1, 'G2')
     board = self.game.display_own_board(self.player1)
-    for row in board:
-      print row
+    # for row in board:
+    #   print row
     self.assertEqual(len(board), 10)
 
   def test_displays_players_opponent_board(self):
     self.player1.place_ship(Ship('Destroyer'), 'B3')
-    self.player2.shoot(self.player1, 'B3')
-    self.player2.shoot(self.player1, 'F8')
+    # self.player2.shoot(self.player1, 'B3')
+    # self.player2.shoot(self.player1, 'F8')
     board = self.game.display_opponent_board(self.player1)
     # for row in board:
     #   print row
