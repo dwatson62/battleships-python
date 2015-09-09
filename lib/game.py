@@ -1,12 +1,12 @@
 class Game(object):
 
   def declare_winner(self, player1, player2):
-    if self.check_ships(player1) == True:
+    if self.check_all_ships_sunk(player1) == True:
       return 'Player 2 wins!'
-    if self.check_ships(player2) == True:
+    if self.check_all_ships_sunk(player2) == True:
       return 'Player 1 wins!'
 
-  def check_ships(self, player):
+  def check_all_ships_sunk(self, player):
     for ship in player.ships:
       if ship['hits'] != 0: return False
     return True
@@ -14,19 +14,12 @@ class Game(object):
   def create_board(self):
     board = []
     for i in range(0, 10): board.append([])
-    letters = self.char_range('A', 'J')
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     for i in range(1, 11):
       for j in range(1, 11):
         square = letters[i - 1] + str(j)
         board[i - 1].append(square)
     return board
-
-  def char_range(self, c1, c2):
-    """Generates the characters from `c1` to `c2`, inclusive."""
-    array = []
-    for c in xrange(ord(c1), ord(c2)+1):
-      array.append(chr(c))
-    return array
 
   def display_own_board(self, player):
     board = self.create_board()
@@ -36,11 +29,11 @@ class Game(object):
     return board
 
   def check_own_square_status(self, square, player):
-    for ship in player.ships:
-      if square in ship['positions']:
-        newsquare = player.received_shots.get(square)
-        if newsquare != None: return newsquare
-      if square in ship['positions']: return 'SHIP'
+    newsquare = player.received_shots.get(square)
+    if newsquare != None: return newsquare
+    if newsquare == None:
+      for ship in player.ships:
+        if square in ship['positions']: return 'SHIP'
     return '~'
 
   def display_opponent_board(self, player):
@@ -51,8 +44,6 @@ class Game(object):
     return board
 
   def check_opponent_square_status(self, square, player):
-    for ship in player.ships:
-      if square in ship['positions']:
-        newsquare = player.received_shots.get(square)
-        if newsquare != None: return newsquare
+    newsquare = player.received_shots.get(square)
+    if newsquare != None: return newsquare
     return '~'
