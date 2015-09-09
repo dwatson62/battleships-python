@@ -26,14 +26,6 @@ class TestShip(unittest.TestCase):
   def test_destroyer_gets_correct_length(self):
     self.assertEqual(self.destroyer.length, 2)
 
-  def test_destroyer_covers_two_squares(self):
-    self.squares = self.destroyer.get_horizontal_squares('B6')
-    self.assertEqual(self.squares, ['B6', 'B7'])
-
-  def test_destroyer_covers_two_squares_at_edge_of_board(self):
-    self.squares = self.destroyer.get_horizontal_squares('B9')
-    self.assertEqual(self.squares, ['B9', 'B10'])
-
   def test_destroyer_can_be_placed_vertically(self):
     self.squares = self.destroyer.get_vertical_squares('B9')
     self.assertEqual(self.squares, ['B9', 'C9'])
@@ -41,10 +33,6 @@ class TestShip(unittest.TestCase):
   def test_cruiser_can_be_placed_horizontally(self):
     self.squares = self.cruiser.get_horizontal_squares('A3')
     self.assertEqual(self.squares, ['A3', 'A4', 'A5'])
-
-  def test_cruiser_can_be_placed_vertically(self):
-    self.squares = self.cruiser.get_vertical_squares('A3')
-    self.assertEqual(self.squares, ['A3', 'B3', 'C3'])
 
   def test_ship_cannot_be_placed_out_of_bounds(self):
     with self.assertRaises(Exception) as context:

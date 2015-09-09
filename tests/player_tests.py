@@ -10,7 +10,7 @@ class TestPlayer(unittest.TestCase):
   def setUp(self):
     self.player1 = Player('Player1')
     self.player2 = Player('Player2')
-    self.destroyer = Ship('Destroyer')
+    self.battleship = Ship('Battleship')
 
   def test_player_exists(self):
     self.assertEqual(self.player1, self.player1)
@@ -29,12 +29,12 @@ class TestPlayer(unittest.TestCase):
     self.player1.place_ship(self.sub, 'A1')
     self.assertEqual(self.player1.ships, [{'ship': 'Sub', 'positions': ['A1'], 'hits': 1 }] )
 
-  def test_player_can_place_a_destroyer_horizontally(self):
+  def test_player_can_place_a_battleship_horizontally(self):
     """
-    Player can place a destroyer horizontally, and have record of its position
+    Player can place a Battleship horizontally, and have record of its position
     """
-    self.player1.place_ship(self.destroyer, 'A1')
-    self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'A2'], 'hits': 2 }] )
+    self.player1.place_ship(self.battleship, 'A1')
+    self.assertEqual(self.player1.ships, [{'ship': 'Battleship', 'positions': ['A1', 'A2', 'A3', 'A4'], 'hits': 4 }] )
 
   def test_player_can_place_a_cruiser_horizontally(self):
     """
@@ -44,12 +44,12 @@ class TestPlayer(unittest.TestCase):
     self.player1.place_ship(self.cruiser, 'A1')
     self.assertEqual(self.player1.ships, [{'ship': 'Cruiser', 'positions': ['A1', 'A2', 'A3'], 'hits': 3 }] )
 
-  def test_player_can_place_a_destroyer_vertically(self):
+  def test_player_can_place_a_battleship_vertically(self):
     """
     Player can place a destroyer vertically, and have record of its position
     """
-    self.player1.place_ship(self.destroyer, 'A1', 'V')
-    self.assertEqual(self.player1.ships, [{'ship': 'Destroyer', 'positions': ['A1', 'B1'], 'hits': 2 } ])
+    self.player1.place_ship(self.battleship, 'A1', 'V')
+    self.assertEqual(self.player1.ships, [{'ship': 'Battleship', 'positions': ['A1', 'B1', 'C1', 'D1'], 'hits': 4 } ])
 
   def test_player_can_shoot_at_opponent(self):
     """
@@ -80,14 +80,15 @@ class TestPlayer(unittest.TestCase):
     self.assertTrue('Out of bounds' in context.exception)
 
   def test_player_can_hit_opponent_ship(self):
-    self.player2.place_ship(self.destroyer, 'A1')
+    self.player2.place_ship(self.battleship, 'A1')
     shoot = self.player1.shoot(self.player2, 'A1')
     self.assertEqual(shoot, 'HIT')
 
   def test_player_can_sink_ship(self):
-    self.player2.place_ship(self.destroyer, 'A1')
+    self.player2.place_ship(Ship('Cruiser'), 'A1')
     self.player1.shoot(self.player2, 'A1')
-    shoot = self.player1.shoot(self.player2, 'A2')
+    self.player1.shoot(self.player2, 'A2')
+    shoot = self.player1.shoot(self.player2, 'A3')
     self.assertEqual(shoot, 'SUNK')
 
 if __name__ == '__main__':
