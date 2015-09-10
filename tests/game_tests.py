@@ -14,7 +14,10 @@ class TestGame(unittest.TestCase):
     self.player2 = Player('Player2')
 
   def test_displays_players_own_board(self):
+    self.player2.shoot(self.player1, 'J9')
     board = self.game.display_board(self.player1)
+    for row in board:
+      print row
     self.assertEqual(len(board), 10)
 
   def test_displays_players_opponent_board(self):

@@ -1,5 +1,6 @@
 from game import Game
-from helpers import char_range
+from helpers import *
+import re
 
 class Player(object):
 
@@ -13,23 +14,13 @@ class Player(object):
     self.ships.append( {'ship': ship.name, 'positions': ship.get_squares(self, position, orientation), 'hits': ship.hits } )
 
   def shoot(self, player, position):
-    self.check_in_bounds(position)
+    check_out_of_bounds(position)
     self.check_has_already_fired(position)
     for ship in player.ships:
       if position in ship['positions']:
         self.has_hit(ship, player, position)
         return self.check_has_sunk(ship, player)
     return self.has_missed(player, position)
-
-  def check_in_bounds(self, position):
-    square = list(position)
-    if square[0] not in char_range('A', 'J'): self.out_of_bounds()
-    del square[0]
-    if int("".join(square)) > 10: self.out_of_bounds()
-    if int("".join(square)) < 1: self.out_of_bounds()
-
-  def out_of_bounds(self):
-    raise Exception('Out of bounds')
 
   def check_has_already_fired(self, position):
     if position in self.fired_shots:

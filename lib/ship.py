@@ -1,4 +1,5 @@
-from helpers import char_range
+from helpers import *
+import re
 
 class Ship(object):
 
@@ -25,28 +26,22 @@ class Ship(object):
   def get_horizontal_squares(self, position):
     squares = [position]
     for i in range(1, self.length):
-      square = list(position)
-      if square[-1] == '9': square[-1] = '10'
-      else:
-        square[-1] = (chr(ord(square[-1]) + i))
+      square = re.split('(\d+)', position)
+      square[1] = (chr(ord(square[1]) + i))
       squares.append("".join(square))
     return squares
 
   def get_vertical_squares(self, position):
     squares = [position]
     for i in range(1, self.length):
-      square = list(position)
+      square = re.split('(\d+)', position)
       square[0] = (chr(ord(square[0]) + i))
       squares.append("".join(square))
     return squares
 
   def check_out_of_bounds(self, squares):
     for square in squares:
-      square = list(square)
-      if square[0] not in char_range('A', 'J'):
-        raise Exception('Out of bounds')
-      del square[0]
-      if int("".join(square)) > 10: raise Exception('Out of bounds')
+      check_out_of_bounds(square)
 
   def check_overlapping(self, player, squares):
     for square in squares:
